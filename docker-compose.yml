@@ -1,0 +1,21 @@
+services:
+  sreality-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sreality-api
+    restart: unless-stopped
+    volumes:
+      - ./script.py:/app/script.py:ro
+      - ./requirements.txt:/app/requirements.txt:ro
+      - /volumes/sreality-api:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DATA_DIR=/app/data
+      - CHECK_INTERVAL=300
+    env_file:
+      - .env
+
+volumes:
+  sreality-data:
+    driver: local
